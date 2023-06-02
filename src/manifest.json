@@ -1,9 +1,9 @@
 {
-  "name": "Ant Design Pro",
-  "short_name": "Ant Design Pro",
+  "name": "协力小帮手",
+  "short_name": "协力小帮手",
   "display": "standalone",
   "start_url": "./?utm_source=homescreen",
-  "theme_color": "#002140",
+  "theme_color": "#5651ef",
   "background_color": "#001529",
   "icons": [
     {

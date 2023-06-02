@@ -5,7 +5,6 @@ import { ProLayoutProps } from '@ant-design/pro-components';
  */
 const Settings: ProLayoutProps & {
   pwa?: boolean;
-  logo?: string;
 } = {
   navTheme: 'light',
   // 拂晓蓝
@@ -15,9 +14,9 @@ const Settings: ProLayoutProps & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: 'Ant Design Pro',
+  title: '协力小帮手',
   pwa: true,
-  logo: 'https://gw.alipayobjects.com/zos/rmsportal/KDpgvguMpGfqaHPjicRK.svg',
+  logo: 'logo.svg',
   iconfontUrl: '',
 };
 
