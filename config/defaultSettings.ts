@@ -7,7 +7,6 @@ const Settings: ProLayoutProps & {
   pwa?: boolean;
 } = {
   navTheme: 'light',
-  // 拂晓蓝
   colorPrimary: '#5651ef',
   layout: 'mix',
   contentWidth: 'Fluid',
