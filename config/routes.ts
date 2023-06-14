@@ -12,14 +12,14 @@
  */
 export default [
   {
-    path: '/welcome',
-    name: 'welcome',
-    icon: 'smile',
-    component: './Welcome',
+    path: '/home',
+    name: 'all',
+    icon: 'Appstore',
+    component: './Home',
   },
   {
     path: '/',
-    redirect: '/welcome',
+    redirect: '/home',
   },
   {
     path: '*',

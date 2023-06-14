@@ -181,14 +181,7 @@
         min-height: 362px;
       ">
         <div class="page-loading-warp">
-          <div class="ant-spin ant-spin-lg ant-spin-spinning">
-            <span class="ant-spin-dot ant-spin-dot-spin">
-              <i class="ant-spin-dot-item"></i>
-              <i class="ant-spin-dot-item"></i>
-              <i class="ant-spin-dot-item"></i>
-              <i class="ant-spin-dot-item"></i>
-            </span>
-          </div>
+          <img alt='loading' src='./loading.svg' width='80px' height='80px'/>
         </div>
         <div class="loading-title">
           正在加载资源

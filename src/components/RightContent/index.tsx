@@ -2,8 +2,6 @@ import { useModel } from '@umijs/max';
 import { Switch } from 'antd';
 import React from 'react';
 
-export type SiderTheme = 'light' | 'dark';
-
 export const SelectTheme: React.FC = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
   return (

@@ -1,3 +1,3 @@
 export default {
-  'menu.welcome': '欢迎',
+  'menu.all': '全部',
 };
