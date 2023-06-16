@@ -1,5 +1,5 @@
 import Footer from '@/components/Footer';
-import { SelectTheme } from '@/components/RightContent';
+import { SearchInput, SelectTheme } from '@/components/RightContent';
 import type { Settings as LayoutSettings } from '@ant-design/pro-components';
 import type { RunTimeLayoutConfig } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
@@ -20,7 +20,7 @@ export async function getInitialState(): Promise<{
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
   return {
-    actionsRender: () => [<SelectTheme key={'theme'} />],
+    actionsRender: () => [<SearchInput key={'search'} />, <SelectTheme key={'theme'} />],
     footerRender: () => <Footer />,
     ...initialState?.settings,
   };

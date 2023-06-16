@@ -1,11 +1,12 @@
 import { ProLayoutProps } from '@ant-design/pro-components';
 
 /**
- * @name
+ * layout默认设置
  */
 const Settings: ProLayoutProps & {
   pwa?: boolean;
 } = {
+  locale: 'zh-CN',
   navTheme: 'light',
   colorPrimary: '#5651ef',
   layout: 'mix',
