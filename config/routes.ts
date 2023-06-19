@@ -14,12 +14,37 @@ export default [
   {
     path: '/home',
     name: 'all',
-    icon: 'Appstore',
+    icon: 'appstore',
     component: './Home',
   },
   {
     path: '/',
     redirect: '/home',
+  },
+  {
+    path: '/txt',
+    name: 'txt',
+    icon: 'fileText',
+  },
+  {
+    path: '/img',
+    name: 'img',
+    icon: 'picture',
+  },
+  {
+    path: '/video',
+    name: 'video',
+    icon: 'playCircle',
+  },
+  {
+    path: '/dev',
+    name: 'dev',
+    icon: 'code',
+  },
+  {
+    path: '/other',
+    name: 'other',
+    icon: 'appstoreAdd',
   },
   {
     path: '*',
