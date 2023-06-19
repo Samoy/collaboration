@@ -86,7 +86,9 @@ export default defineConfig({
     default: 'zh-CN',
     baseNavigator: true,
     antd: true,
+    title: true,
   },
+  title: 'site.title',
   /**
    * @name moment2dayjs 插件
    * @description 将项目中的 moment 替换为 dayjs

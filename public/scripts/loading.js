@@ -184,10 +184,10 @@
           <img alt='loading' src='./loading.svg' width='80px' height='80px'/>
         </div>
         <div class="loading-title">
-          正在加载资源
+          Loading...
         </div>
         <div class="loading-sub-title">
-          初次加载资源可能需要较多时间 请耐心等待
+          It may take more time, please wait
         </div>
       </div>
     `;

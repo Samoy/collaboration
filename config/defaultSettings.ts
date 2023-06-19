@@ -6,7 +6,6 @@ import { ProLayoutProps } from '@ant-design/pro-components';
 const Settings: ProLayoutProps & {
   pwa?: boolean;
 } = {
-  locale: 'zh-CN',
   navTheme: 'light',
   colorPrimary: '#5651ef',
   layout: 'mix',
@@ -14,7 +13,6 @@ const Settings: ProLayoutProps & {
   fixedHeader: false,
   fixSiderbar: true,
   colorWeak: false,
-  title: '协力小帮手',
   pwa: true,
   logo: 'logo.svg',
   iconfontUrl: '',

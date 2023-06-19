@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { styled } from '@@/plugin-styledComponents';
 import { SearchOutlined } from '@ant-design/icons';
+import { useIntl } from '@umijs/max';
+import _ from 'lodash';
+import { Bool } from '@/constant/enum';
 
-const StyledDiv = styled.div`
-  color: #fff;
+interface IStyledDivProps {
+  show?: Bool;
+}
+
+const StyledDiv = styled.div<IStyledDivProps>`
   width: auto;
   border-radius: 15px;
   min-width: 30px;
@@ -12,9 +18,9 @@ const StyledDiv = styled.div`
   display: inline-block;
   position: relative;
   overflow: hidden;
-  background-image: linear-gradient(315deg, #00b8aa 0, #0080b2 100%);
   background-size: 104% 104%;
   cursor: pointer;
+  background-color: ${(props) => (props.show ? 'rgba(0, 0, 0, 0.03)' : 'transparent')};
   &:hover {
     input {
       display: inline-block;
@@ -49,10 +55,6 @@ const StyledDiv = styled.div`
     font-size: 14px;
     width: 0;
     transition: all 0.3s ease-in-out;
-    color: #fff;
-    &::placeholder {
-      color: #ffffff50;
-    }
     &:focus {
       outline: none;
     }
@@ -67,12 +69,13 @@ const StyledDiv = styled.div`
 
 export const SearchInput: React.FC = () => {
   const [inputValue, setInputValue] = useState<string>('');
+  const intl = useIntl();
   return (
-    <StyledDiv>
+    <StyledDiv show={_.isEmpty(inputValue) ? Bool.False : Bool.True}>
       <SearchOutlined></SearchOutlined>
       <input
         type="text"
-        placeholder="请输入搜索内容"
+        placeholder={intl.formatMessage({ id: 'component.globalHeader.search' })}
         value={inputValue}
         onChange={(e) => {
           setInputValue(e.target.value);

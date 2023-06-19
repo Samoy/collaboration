@@ -1,5 +1,5 @@
 import { DefaultFooter } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
+import { FormattedMessage, useIntl } from '@umijs/max';
 import React from 'react';
 
 const Footer: React.FC = () => {
@@ -20,10 +20,10 @@ const Footer: React.FC = () => {
       links={[
         {
           key: 'collaboration',
-          title: '协力小帮手',
+          title: <FormattedMessage id={'site.title'} />,
           href: 'https://collaboration.samoy.site',
           blankTarget: true,
-        }
+        },
       ]}
     />
   );

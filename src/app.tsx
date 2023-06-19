@@ -5,6 +5,8 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import defaultSettings from '../config/defaultSettings';
 import { errorConfig } from './requestErrorConfig';
 import React from 'react';
+import { getLocale, useIntl, SelectLang } from '@umijs/max';
+import { GlobalOutlined } from '@ant-design/icons';
 
 /**
  * @see  https://umijs.org/zh-CN/plugins/plugin-initial-state
@@ -19,8 +21,16 @@ export async function getInitialState(): Promise<{
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
 export const layout: RunTimeLayoutConfig = ({ initialState }) => {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  const intl = useIntl();
   return {
-    actionsRender: () => [<SearchInput key={'search'} />, <SelectTheme key={'theme'} />],
+    title: intl.formatMessage({ id: 'site.title' }),
+    locale: getLocale(),
+    actionsRender: () => [
+      <SearchInput key={'search'} />,
+      <SelectLang key={'lange'} icon={<GlobalOutlined />} />,
+      <SelectTheme key={'theme'} />,
+    ],
     footerRender: () => <Footer />,
     ...initialState?.settings,
   };
