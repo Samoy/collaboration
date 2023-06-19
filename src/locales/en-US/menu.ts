@@ -4,5 +4,5 @@ export default {
   'menu.img': 'Picture',
   'menu.video': 'Video',
   'menu.dev': 'Development',
-  'menu.other': 'Others',
+  'menu.others': 'Others',
 };

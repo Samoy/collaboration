@@ -15,7 +15,7 @@ const Settings: ProLayoutProps & {
   colorWeak: false,
   pwa: true,
   logo: 'logo.svg',
-  iconfontUrl: '',
+  iconfontUrl: '//at.alicdn.com/t/c/font_3334376_1r90xawz8ee.js',
 };
 
 export default Settings;

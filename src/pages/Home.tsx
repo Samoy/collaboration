@@ -1,8 +1,8 @@
-import { PageContainer } from '@ant-design/pro-components';
 import React from 'react';
+import { MainContent } from '@/components/MainContent';
 
 const Home: React.FC = () => {
-  return <PageContainer></PageContainer>;
+  return <MainContent></MainContent>;
 };
 
 export default Home;

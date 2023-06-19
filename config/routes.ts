@@ -25,26 +25,31 @@ export default [
     path: '/txt',
     name: 'txt',
     icon: 'fileText',
+    component: './Text',
   },
   {
     path: '/img',
     name: 'img',
     icon: 'picture',
+    component: './Image',
   },
   {
     path: '/video',
     name: 'video',
     icon: 'playCircle',
+    component: './Video',
   },
   {
     path: '/dev',
     name: 'dev',
     icon: 'code',
+    component: './Development',
   },
   {
-    path: '/other',
-    name: 'other',
+    path: '/others',
+    name: 'others',
     icon: 'appstoreAdd',
+    component: 'Others',
   },
   {
     path: '*',
