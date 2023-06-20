@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { styled } from '@@/plugin-styledComponents';
 import { SearchOutlined } from '@ant-design/icons';
-import { useIntl } from '@umijs/max';
+import { useIntl, useModel } from '@umijs/max';
 import _ from 'lodash';
 import { Bool } from '@/constant/enum';
+import { Dropdown, theme } from 'antd';
 
 interface IStyledDivProps {
   show?: Bool;
@@ -68,19 +69,52 @@ const StyledDiv = styled.div<IStyledDivProps>`
 `;
 
 export const SearchInput: React.FC = () => {
+  const { token } = theme.useToken();
   const [inputValue, setInputValue] = useState<string>('');
   const intl = useIntl();
+  const { toolList } = useModel('tool', ({ toolList }) => ({
+    toolList,
+  }));
+
+  const filterList = useMemo(() => {
+    if (_.isEmpty(inputValue)) {
+      return [];
+    } else {
+      return toolList.filter((x) => {
+        return intl.formatMessage({ id: x.title }).includes(inputValue);
+      });
+    }
+  }, [toolList, inputValue]);
+
   return (
     <StyledDiv show={_.isEmpty(inputValue) ? Bool.False : Bool.True}>
       <SearchOutlined></SearchOutlined>
-      <input
-        type="text"
-        placeholder={intl.formatMessage({ id: 'component.globalHeader.search' })}
-        value={inputValue}
-        onChange={(e) => {
-          setInputValue(e.target.value);
+      <Dropdown
+        open={!_.isEmpty(filterList)}
+        menu={{
+          items: filterList.map((tool) => {
+            const label = intl.formatMessage({ id: tool.title });
+            const searchRegex = new RegExp(inputValue, 'gi');
+            const highlightLabel = label.replace(
+              searchRegex,
+              `<strong style="color: ${token?.colorPrimaryTextActive}">$&</strong>`,
+            );
+            return {
+              label: <span dangerouslySetInnerHTML={{ __html: highlightLabel }} />,
+              key: tool.title,
+            };
+          }),
         }}
-      />
+      >
+        <input
+          type="text"
+          placeholder={intl.formatMessage({ id: 'component.globalHeader.search' })}
+          value={inputValue}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
+        />
+      </Dropdown>
     </StyledDiv>
   );
 };
