@@ -1,6 +1,6 @@
 import React from 'react';
 import { PageContainer } from '@ant-design/pro-components';
-import { useModel, FormattedMessage } from '@umijs/max';
+import { useModel, FormattedMessage, Link } from '@umijs/max';
 import { ToolCategory } from '@/constant/enum';
 import { Row, Col, Card } from 'antd';
 import { styled } from '@@/plugin-styledComponents';
@@ -27,17 +27,19 @@ export const MainContent: React.FC<IMainContentProps> = ({ category }) => {
       <Row gutter={[16, 16]} wrap>
         {toolList.map((tool, index) => (
           <Col key={index} span={6}>
-            <Card hoverable>
-              <StyledMeta
-                avatar={
-                  <svg className={'icon'} aria-hidden={'true'} width={40} height={40}>
-                    <use xlinkHref={`#${tool.icon}`}></use>
-                  </svg>
-                }
-                description={<FormattedMessage id={tool.desc} />}
-                title={<FormattedMessage id={tool.title} />}
-              />
-            </Card>
+            <Link to={tool.url}>
+              <Card hoverable>
+                <StyledMeta
+                  avatar={
+                    <svg className={'icon'} aria-hidden={'true'} width={40} height={40}>
+                      <use xlinkHref={`#${tool.icon}`}></use>
+                    </svg>
+                  }
+                  description={<FormattedMessage id={tool.desc} />}
+                  title={<FormattedMessage id={tool.title} />}
+                />
+              </Card>
+            </Link>
           </Col>
         ))}
       </Row>

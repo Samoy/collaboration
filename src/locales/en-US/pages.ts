@@ -1,5 +1,14 @@
 export default {
   'page.home': 'Home',
+  'page.text.count': 'Count Word',
+  'page.text.desc':
+    'Count the number of characters in the input text, including spaces, symbols, and so on',
+  'page.text.count.placeholder': 'Please enter the text you want to count.',
+  'page.text.count.total': 'Total',
+  'page.text.count.chinese': 'Chinese Character(s)',
+  'page.text.count.english': 'English Character(s)',
+  'page.text.count.number': 'Number',
+  'page.text.count.special': 'Special Character(s)',
   'page.text.reverse': 'Reverse Text',
   'page.text.reverse.desc': 'Reverse the text, for example, convert "ABC" to "CBA"',
   'page.image.exif': 'Image Exif',

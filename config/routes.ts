@@ -28,6 +28,12 @@ export default [
     component: './Text',
   },
   {
+    path: '/txt/count',
+    name: 'txt.count',
+    component: './Text/TextCount',
+    hideInMenu: true,
+  },
+  {
     path: '/img',
     name: 'img',
     icon: 'picture',

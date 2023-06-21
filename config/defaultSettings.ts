@@ -14,8 +14,8 @@ const Settings: ProLayoutProps & {
   fixSiderbar: true,
   colorWeak: false,
   pwa: true,
-  logo: 'logo.svg',
-  iconfontUrl: '//at.alicdn.com/t/c/font_3334376_1r90xawz8ee.js',
+  logo: '/logo.svg',
+  iconfontUrl: '//at.alicdn.com/t/c/font_3334376_79bao98wpyc.js',
 };
 
 export default Settings;
