@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { PageContainer } from '@ant-design/pro-components';
-import { Input, theme } from 'antd';
+import { Card, Input, Space } from 'antd';
 import { ProDescriptions } from '@ant-design/pro-components';
 import { FormattedMessage, useIntl } from '@umijs/max';
 
@@ -57,7 +57,6 @@ function TextCount() {
     total: 0,
   });
   const [inputValue, setInputValue] = useState('');
-  const { token } = theme.useToken();
   const intl = useIntl();
 
   useEffect(() => {
@@ -67,54 +66,53 @@ function TextCount() {
 
   return (
     <PageContainer>
-      <Input.TextArea
-        value={inputValue}
-        onChange={(e) => {
-          setInputValue(e.target.value);
-        }}
-        rows={6}
-        placeholder={intl.formatMessage({ id: 'page.text.count.placeholder' })}
-      />
-      <ProDescriptions
-        style={{
-          marginTop: token.margin,
-          background: token.colorBgBase,
-          padding: token.padding,
-          borderRadius: token.borderRadius,
-        }}
-        column={1}
-      >
-        <ProDescriptions.Item
-          label={<FormattedMessage id={'page.text.count.total'}></FormattedMessage>}
-        >
-          {count.total}
-        </ProDescriptions.Item>
-        <ProDescriptions.Item
-          label={<FormattedMessage id={'page.text.count.chinese'}></FormattedMessage>}
-        >
-          {count.chinese}
-        </ProDescriptions.Item>
-        <ProDescriptions.Item
-          label={<FormattedMessage id={'page.text.count.english'}></FormattedMessage>}
-        >
-          {count.english}
-        </ProDescriptions.Item>
-        <ProDescriptions.Item
-          label={<FormattedMessage id={'page.text.count.number'}></FormattedMessage>}
-        >
-          {count.number}
-        </ProDescriptions.Item>
-        <ProDescriptions.Item
-          label={<FormattedMessage id={'page.text.count.space'}></FormattedMessage>}
-        >
-          {count.space}
-        </ProDescriptions.Item>
-        <ProDescriptions.Item
-          label={<FormattedMessage id={'page.text.count.special'}></FormattedMessage>}
-        >
-          {count.special}
-        </ProDescriptions.Item>
-      </ProDescriptions>
+      <Space direction="vertical" size={'large'}>
+        <Card title={<FormattedMessage id={'page.text.count.title'} />}>
+          <Input.TextArea
+            bordered={false}
+            value={inputValue}
+            onChange={(e) => {
+              setInputValue(e.target.value);
+            }}
+            rows={3}
+            placeholder={intl.formatMessage({ id: 'page.text.count.placeholder' })}
+          />
+        </Card>
+        <Card title={<FormattedMessage id={'page.text.count.result'} />}>
+          <ProDescriptions column={1}>
+            <ProDescriptions.Item
+              label={<FormattedMessage id={'page.text.count.total'}></FormattedMessage>}
+            >
+              {count.total}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label={<FormattedMessage id={'page.text.count.chinese'}></FormattedMessage>}
+            >
+              {count.chinese}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label={<FormattedMessage id={'page.text.count.english'}></FormattedMessage>}
+            >
+              {count.english}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label={<FormattedMessage id={'page.text.count.number'}></FormattedMessage>}
+            >
+              {count.number}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label={<FormattedMessage id={'page.text.count.space'}></FormattedMessage>}
+            >
+              {count.space}
+            </ProDescriptions.Item>
+            <ProDescriptions.Item
+              label={<FormattedMessage id={'page.text.count.special'}></FormattedMessage>}
+            >
+              {count.special}
+            </ProDescriptions.Item>
+          </ProDescriptions>
+        </Card>
+      </Space>
     </PageContainer>
   );
 }

@@ -34,6 +34,12 @@ export default [
     hideInMenu: true,
   },
   {
+    path: '/txt/reverse',
+    name: 'txt.reverse',
+    component: './Text/TextReverse',
+    hideInMenu: true,
+  },
+  {
     path: '/img',
     name: 'img',
     icon: 'picture',

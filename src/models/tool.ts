@@ -24,7 +24,7 @@ const tools: IToolModel[] = [
     category: ToolCategory.Text,
     icon: 'col-text-reverse',
     desc: 'page.text.reverse.desc',
-    url: '/txt/count',
+    url: '/txt/reverse',
   },
   {
     title: 'page.image.exif',
