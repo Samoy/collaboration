@@ -46,6 +46,12 @@ export default [
     component: './Image',
   },
   {
+    path: '/img/exif',
+    name: 'img.exif',
+    component: './Image/ImageExif',
+    hideInMenu: true,
+  },
+  {
     path: '/video',
     name: 'video',
     icon: 'playCircle',

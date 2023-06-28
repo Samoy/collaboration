@@ -31,7 +31,7 @@ const tools: IToolModel[] = [
     category: ToolCategory.Image,
     icon: 'col-picture-exif',
     desc: 'page.image.exif.desc',
-    url: '/txt/count',
+    url: '/img/exif',
   },
   {
     title: 'page.video.transcoding',

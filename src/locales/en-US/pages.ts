@@ -19,7 +19,7 @@ export default {
   'page.text.reverse.copy': 'Copy',
   'page.text.reverse.copy.success': 'Copied!',
   'page.image.exif': 'Image Exif',
-  'page.image.exif.desc': 'Get/Edit image metadata (EXIF)',
+  'page.image.exif.desc': 'Get/Edit image exif',
   'page.video.transcoding': 'Video Transcoding',
   'page.video.transcoding.desc':
     'Transcode video format , for example, converting MP4 format to AVI.',

@@ -4,6 +4,7 @@ export default {
   'menu.txt.count': 'Word Count',
   'menu.txt.reverse': 'Text Reverse',
   'menu.img': 'Picture',
+  'menu.img.exif': 'Image Exif',
   'menu.video': 'Video',
   'menu.dev': 'Development',
   'menu.others': 'Others',

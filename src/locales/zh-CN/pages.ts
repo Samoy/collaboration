@@ -19,7 +19,7 @@ export default {
   'page.text.reverse.copy': '复制',
   'page.text.reverse.copy.success': '复制成功',
   'page.image.exif': '图片元信息',
-  'page.image.exif.desc': '获取/编辑图片元数据（EXIF）',
+  'page.image.exif.desc': '获取/编辑图片元信息（EXIF）',
   'page.video.transcoding': '视频转码',
   'page.video.transcoding.desc': '视频格式转码，例如将MP4格式转换为AVI',
   'page.dev.color.conversion': '颜色转换',
