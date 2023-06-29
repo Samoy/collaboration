@@ -20,6 +20,16 @@ export default {
   'page.text.reverse.copy.success': 'Copied!',
   'page.image.exif': 'Image Exif',
   'page.image.exif.desc': 'Get/Edit image exif',
+  'page.image.exif.upload': 'Upload Image',
+  'page.image.exif.write': 'Save EXIF',
+  'page.image.exif.clear': 'Clear EXIF',
+  'page.image.exif.save': 'Download Image',
+  'page.image.exif.original': 'Original Image',
+  'page.image.exif.target': 'Target Image',
+  'page.image.exif.title': 'Exif',
+  'page.image.exif.tooltip':
+    'Please understand the meanings of each parameter fully and accord to the format strictly before editing.',
+  'page.image.exif.format-error': 'Please upload image in JPEG format',
   'page.video.transcoding': 'Video Transcoding',
   'page.video.transcoding.desc':
     'Transcode video format , for example, converting MP4 format to AVI.',
