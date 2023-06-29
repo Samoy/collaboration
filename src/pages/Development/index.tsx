@@ -2,8 +2,8 @@ import React from 'react';
 import { ToolCategory } from '@/constant/enum';
 import { MainContent } from '@/components/MainContent';
 
-export const TextPage: React.FC = () => {
+export const DevPage: React.FC = () => {
   return <MainContent category={ToolCategory.Development} />;
 };
 
-export default TextPage;
+export default DevPage;
