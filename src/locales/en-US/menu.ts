@@ -6,6 +6,7 @@ export default {
   'menu.img': 'Picture',
   'menu.img.exif': 'Image Exif',
   'menu.video': 'Video',
+  'menu.video.transcoding': 'Video Transcoding',
   'menu.dev': 'Development',
   'menu.others': 'Others',
 };

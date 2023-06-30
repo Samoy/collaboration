@@ -152,7 +152,7 @@ function ImageExif() {
   };
 
   return (
-    <PageContainer style={{ height: '100%' }}>
+    <PageContainer>
       <ProCard style={{ flex: 1 }} direction={'column'}>
         <Row>
           <Col span={24}>
@@ -169,6 +169,7 @@ function ImageExif() {
                     onChange={handleChange}
                   >
                     <Button icon={<UploadOutlined></UploadOutlined>}>
+                      {''}
                       <FormattedMessage id={'page.image.exif.upload'}></FormattedMessage>
                     </Button>
                   </Upload>
@@ -178,6 +179,7 @@ function ImageExif() {
                   onClick={saveExif}
                   icon={<SaveOutlined />}
                 >
+                  {''}
                   <FormattedMessage id={'page.image.exif.write'}></FormattedMessage>
                 </Button>
                 <Button
@@ -185,6 +187,7 @@ function ImageExif() {
                   onClick={removeExif}
                   icon={<ClearOutlined />}
                 >
+                  {''}
                   <FormattedMessage id={'page.image.exif.clear'}></FormattedMessage>
                 </Button>
                 <Button
@@ -192,6 +195,7 @@ function ImageExif() {
                   onClick={downloadImage}
                   icon={<DownloadOutlined />}
                 >
+                  {''}
                   <FormattedMessage id={'page.image.exif.save'}></FormattedMessage>
                 </Button>
               </Space>

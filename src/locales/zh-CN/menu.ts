@@ -6,6 +6,7 @@ export default {
   'menu.img': '图片工具',
   'menu.img.exif': '图片元信息',
   'menu.video': '视频工具',
+  'menu.video.transcoding': '视频转码',
   'menu.dev': '开发工具',
   'menu.others': '其他工具',
 };

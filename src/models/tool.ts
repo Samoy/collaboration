@@ -38,7 +38,7 @@ const tools: IToolModel[] = [
     category: ToolCategory.Video,
     icon: 'col-video-transcoding',
     desc: 'page.video.transcoding.desc',
-    url: '/txt/count',
+    url: '/video/transcoding',
   },
   {
     title: 'page.dev.color.conversion',

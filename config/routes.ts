@@ -58,6 +58,12 @@ export default [
     component: './Video',
   },
   {
+    path: '/video/transcoding',
+    name: 'video.transcoding',
+    component: './Video/VideoTranscoding',
+    hideInMenu: true,
+  },
+  {
     path: '/dev',
     name: 'dev',
     icon: 'code',
