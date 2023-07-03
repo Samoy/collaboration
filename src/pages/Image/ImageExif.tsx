@@ -146,7 +146,7 @@ function ImageExif() {
   const downloadImage = () => {
     if (file) {
       const name = file.name.substring(0, file.name.lastIndexOf('.'));
-      const suffix = `-副本${file.name.substring(file.name.lastIndexOf('.'))}`;
+      const suffix = `-copy${file.name.substring(file.name.lastIndexOf('.'))}`;
       download(resultData, name + suffix, 'image/jpeg');
     }
   };

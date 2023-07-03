@@ -18,6 +18,7 @@ export const gVideoFormatList: FormatObj[] = [
   { mime: 'video/vnd.dlna.mpeg-tts', ext: 'm2t' },
   { mime: 'video/vnd.dlna.mpeg-tts', ext: 'm2ts' },
   { mime: 'video/ogg', ext: 'ogv' },
+  { mime: 'video/ogg', ext: 'ogg' },
   { mime: 'video/ogm', ext: 'ogm' },
   { mime: 'video/x-flv', ext: 'f4v' },
   { mime: 'video/x-f4v', ext: 'f4v' },

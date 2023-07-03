@@ -128,17 +128,11 @@ export default defineConfig({
   presets: ['umi-presets-pro'],
   mfsu: {
     strategy: 'normal',
-    exclude: [/ffmpeg/],
+    exclude: [/ffmpeg/, /xgplayer/],
   },
   requestRecord: {},
   // 开启styled-components
   styledComponents: {},
   // 开启https
   https: {},
-  chainWebpack(config) {
-    config.devServer.headers({
-      'Cross-Origin-Opener-Policy': 'same-origin',
-      'Cross-Origin-Embedder-Policy': 'require-corp',
-    });
-  },
 });
