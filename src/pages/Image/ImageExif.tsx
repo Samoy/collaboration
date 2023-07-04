@@ -1,24 +1,13 @@
 import { PageContainer, ProCard, ProDescriptions } from '@ant-design/pro-components';
 import piexifjs, { piexif } from 'piexifjs';
-import {
-  Button,
-  Col,
-  Empty,
-  Image,
-  message,
-  Row,
-  Space,
-  theme,
-  Typography,
-  Upload,
-  UploadProps,
-} from 'antd';
+import { Button, Empty, Image, message, Space, theme, Typography, Upload, UploadProps } from 'antd';
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { RcFile } from 'antd/lib/upload';
 import download from 'downloadjs';
 import { FormattedMessage } from '@umijs/max';
 import { ClearOutlined, DownloadOutlined, SaveOutlined, UploadOutlined } from '@ant-design/icons';
+import { FileUtils } from '@/utils';
 
 type ExifObj = {
   '0th': Record<number, any>;
@@ -35,14 +24,6 @@ type ExifInfoValue = {
 };
 
 type ExifInfo = Record<string, ExifInfoValue>;
-
-const getBase64 = (file: RcFile): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result as string);
-    reader.onerror = (error) => reject(error);
-  });
 
 function ImageExif() {
   const { token } = theme.useToken();
@@ -80,6 +61,14 @@ function ImageExif() {
     }
   }, [imageData]);
 
+  const clearInfo = () => {
+    setExifInfo({});
+    setImageData('');
+    setInputValueObj({});
+    setResultData('');
+    setFile(undefined);
+  };
+
   const beforeUpload = (file: File) => {
     const isJPG = file.type === 'image/jpeg';
     if (!isJPG) {
@@ -90,25 +79,15 @@ function ImageExif() {
         ></FormattedMessage>,
       );
     }
+    clearInfo();
     return isJPG || Upload.LIST_IGNORE;
   };
 
-  const clearInfo = () => {
-    setExifInfo({});
-    setImageData('');
-    setInputValueObj({});
-    setResultData('');
-    setFile(undefined);
-  };
-
   const handleChange: UploadProps['onChange'] = ({ file }) => {
-    if (file.status === 'done') {
-      clearInfo();
-      setFile(file.originFileObj);
-      getBase64(file.originFileObj as RcFile).then((data) => {
-        setImageData(data);
-      });
-    }
+    setFile(file.originFileObj);
+    FileUtils.getBase64(file.originFileObj as RcFile).then((data) => {
+      setImageData(data);
+    });
   };
 
   const saveExif = () => {
@@ -145,121 +124,113 @@ function ImageExif() {
 
   const downloadImage = () => {
     if (file) {
-      const name = file.name.substring(0, file.name.lastIndexOf('.'));
-      const suffix = `-copy${file.name.substring(file.name.lastIndexOf('.'))}`;
-      download(resultData, name + suffix, 'image/jpeg');
+      const { name, ext } = FileUtils.getFileName(file.name);
+      download(resultData, `${name}-copy.${ext}`, 'image/jpeg');
     }
   };
 
   return (
     <PageContainer>
-      <ProCard style={{ flex: 1 }} direction={'column'}>
-        <Row>
-          <Col span={24}>
-            <Space direction={'vertical'} style={{ flex: 1, width: '100%' }}>
-              <Space>
-                <>
-                  {contextHolder}
-                  <Upload
-                    beforeUpload={beforeUpload}
-                    accept={'image/jpeg'}
-                    multiple={false}
-                    showUploadList={false}
-                    maxCount={1}
-                    onChange={handleChange}
-                  >
-                    <Button icon={<UploadOutlined></UploadOutlined>}>
-                      {''}
-                      <FormattedMessage id={'page.image.exif.upload'}></FormattedMessage>
-                    </Button>
-                  </Upload>
-                </>
-                <Button
-                  disabled={_.isEmpty(inputValueObj)}
-                  onClick={saveExif}
-                  icon={<SaveOutlined />}
+      <ProCard split={'horizontal'} direction={'column'}>
+        <ProCard split={'horizontal'}>
+          <ProCard direction={'row'}>
+            <Space>
+              <>
+                {contextHolder}
+                <Upload
+                  beforeUpload={beforeUpload}
+                  accept={'image/jpeg'}
+                  multiple={false}
+                  showUploadList={false}
+                  maxCount={1}
+                  onChange={handleChange}
                 >
-                  {''}
-                  <FormattedMessage id={'page.image.exif.write'}></FormattedMessage>
-                </Button>
-                <Button
-                  disabled={_.isEmpty(imageData)}
-                  onClick={removeExif}
-                  icon={<ClearOutlined />}
-                >
-                  {''}
-                  <FormattedMessage id={'page.image.exif.clear'}></FormattedMessage>
-                </Button>
-                <Button
-                  disabled={_.isEmpty(resultData)}
-                  onClick={downloadImage}
-                  icon={<DownloadOutlined />}
-                >
-                  {''}
-                  <FormattedMessage id={'page.image.exif.save'}></FormattedMessage>
-                </Button>
-              </Space>
+                  <Button icon={<UploadOutlined></UploadOutlined>}>
+                    {''}
+                    <FormattedMessage id={'page.image.exif.upload'}></FormattedMessage>
+                  </Button>
+                </Upload>
+              </>
+              <Button
+                disabled={_.isEmpty(inputValueObj)}
+                onClick={saveExif}
+                icon={<SaveOutlined />}
+              >
+                {''}
+                <FormattedMessage id={'page.image.exif.write'}></FormattedMessage>
+              </Button>
+              <Button disabled={_.isEmpty(imageData)} onClick={removeExif} icon={<ClearOutlined />}>
+                {''}
+                <FormattedMessage id={'page.image.exif.clear'}></FormattedMessage>
+              </Button>
+              <Button
+                disabled={_.isEmpty(resultData)}
+                onClick={downloadImage}
+                icon={<DownloadOutlined />}
+              >
+                {''}
+                <FormattedMessage id={'page.image.exif.save'}></FormattedMessage>
+              </Button>
             </Space>
-          </Col>
-        </Row>
-      </ProCard>
-      <Row style={{ background: token.colorBgContainer }}>
-        {_.isEmpty(imageData) ? null : (
-          <Col span={12}>
-            <ProCard
-              direction={'column'}
-              title={<FormattedMessage id={'page.image.exif.original'}></FormattedMessage>}
-            >
-              <Image src={imageData} height={300}></Image>
+          </ProCard>
+          {!_.isEmpty(imageData) && (
+            <ProCard split={'vertical'}>
+              {_.isEmpty(imageData) ? null : (
+                <ProCard
+                  colSpan={12}
+                  direction={'column'}
+                  title={<FormattedMessage id={'page.image.exif.original'}></FormattedMessage>}
+                >
+                  <Image src={imageData} height={300}></Image>
+                </ProCard>
+              )}
+              {_.isEmpty(resultData) ? null : (
+                <ProCard
+                  colSpan={12}
+                  direction={'column'}
+                  title={<FormattedMessage id={'page.image.exif.target'}></FormattedMessage>}
+                >
+                  <Image src={resultData} height={300}></Image>
+                </ProCard>
+              )}
             </ProCard>
-          </Col>
-        )}
-        {_.isEmpty(resultData) ? null : (
-          <Col span={12}>
-            <ProCard
-              direction={'column'}
-              title={<FormattedMessage id={'page.image.exif.target'}></FormattedMessage>}
-            >
-              <Image src={resultData} height={300}></Image>
-            </ProCard>
-          </Col>
-        )}
-      </Row>
-      <ProCard
-        style={{ flex: 1 }}
-        title={<FormattedMessage id={'page.image.exif.title'} />}
-        tooltip={<FormattedMessage id={'page.image.exif.tooltip'} />}
-      >
-        {_.isEmpty(imageData) ? (
-          <Empty></Empty>
-        ) : (
-          <ProDescriptions column={2}>
-            {Object.keys(exifInfo).map((key) => {
-              let value = exifInfo[key].value;
-              if (Array.isArray(value)) {
-                value = JSON.stringify(value);
-              }
-              return (
-                <ProDescriptions.Item key={key} label={key}>
-                  <Typography.Text
-                    style={{ marginLeft: token.margin, flex: 1 }}
-                    editable={{
-                      text: (inputValueObj?.[key] || value) as string,
-                      onChange(val) {
-                        setInputValueObj((o) => ({
-                          ...o,
-                          [key]: val,
-                        }));
-                      },
-                    }}
-                  >
-                    {inputValueObj?.[key] || value}
-                  </Typography.Text>
-                </ProDescriptions.Item>
-              );
-            })}
-          </ProDescriptions>
-        )}
+          )}
+        </ProCard>
+        <ProCard
+          title={<FormattedMessage id={'page.image.exif.title'} />}
+          tooltip={<FormattedMessage id={'page.image.exif.tooltip'} />}
+        >
+          {_.isEmpty(imageData) ? (
+            <Empty></Empty>
+          ) : (
+            <ProDescriptions column={2}>
+              {Object.keys(exifInfo).map((key) => {
+                let value = exifInfo[key].value;
+                if (Array.isArray(value)) {
+                  value = JSON.stringify(value);
+                }
+                return (
+                  <ProDescriptions.Item key={key} label={key}>
+                    <Typography.Text
+                      style={{ marginLeft: token.margin, flex: 1 }}
+                      editable={{
+                        text: (inputValueObj?.[key] || value) as string,
+                        onChange(val) {
+                          setInputValueObj((o) => ({
+                            ...o,
+                            [key]: val,
+                          }));
+                        },
+                      }}
+                    >
+                      {inputValueObj?.[key] || value}
+                    </Typography.Text>
+                  </ProDescriptions.Item>
+                );
+              })}
+            </ProDescriptions>
+          )}
+        </ProCard>
       </ProCard>
     </PageContainer>
   );

@@ -1,166 +1,184 @@
-import { PageContainer, ProCard, ProTable, ProColumns } from '@ant-design/pro-components';
-import React, { useState } from 'react';
-import { Button, message, Progress, Select, Space, Upload, UploadFile, UploadProps } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { PageContainer, ProCard } from '@ant-design/pro-components';
+import React, { useEffect, useState } from 'react';
+import { Button, Empty, message, Modal, Progress, Select, Space, Upload, UploadProps } from 'antd';
+import {
+  DownloadOutlined,
+  FileTextOutlined,
+  ThunderboltOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 import { RcFile } from 'antd/lib/upload';
+import XgPlayer from 'xgplayer';
 import 'xgplayer/dist/index.min.css';
 import { gVideoFormatList } from '@/constant/video';
-import downloadFile from 'downloadjs';
+import { FormattedMessage, getLocale } from '@umijs/max';
+import { ConvertUtils, FileUtils } from '@/utils';
+import _ from 'lodash';
 
-const worker = new Worker(new URL('web-worker.js', location.origin));
+const worker = new Worker(new URL('transcode.js', location.origin));
+
+let originalPlayer: XgPlayer, outputPlayer: XgPlayer;
 
 function VideoTranscoding() {
   const [messageApi, contextHolder] = message.useMessage();
-  const [fileList, setFileList] = useState<UploadFile<RcFile>[]>([]);
+  const [videoFile, setVideoFile] = useState<RcFile>();
+  const [outputUrl, setOutputUrl] = useState<string>();
+  const [showSelectFormat, setShowSelectFormat] = useState(false);
+  const [outputFormat, setOutputFormat] = useState<string>(gVideoFormatList[0].ext);
+  const [progress, setProgress] = useState<number>();
+
+  const setPlayer = (id: string, url: string) => {
+    return new XgPlayer({
+      id,
+      width: '100%',
+      lang: getLocale().toLowerCase(),
+      url,
+    });
+  };
+
+  useEffect(() => {
+    if (originalPlayer) {
+      originalPlayer.destroy();
+    }
+    if (videoFile) {
+      const url = URL.createObjectURL(videoFile);
+      originalPlayer = setPlayer('original_video', url);
+    }
+  }, [videoFile]);
+
+  useEffect(() => {
+    if (outputPlayer) {
+      outputPlayer.destroy();
+    }
+    if (outputUrl) {
+      outputPlayer = setPlayer('output_video', outputUrl);
+    }
+  }, [outputUrl]);
+
+  const clearVideo = () => {
+    setOutputUrl('');
+    setProgress(0);
+  };
 
   const beforeUpload = (file: File) => {
     const isVideo = file.type.startsWith('video/');
+    const under2GB = file.size <= ConvertUtils.convertToBytes(2, 'GB');
     if (!isVideo) {
-      messageApi.error('不是有效的视频格式');
+      messageApi.error(<FormattedMessage id={'page.video.transcoding.format_error'} />);
     }
-    return isVideo || Upload.LIST_IGNORE;
+    if (!under2GB) {
+      messageApi.error(<FormattedMessage id={'page.video.transcoding.size_limit'} />);
+    }
+    return (isVideo && under2GB) || Upload.LIST_IGNORE;
   };
 
-  const handleChange: UploadProps<RcFile>['onChange'] = ({ fileList }) => {
-    setFileList(fileList.map((o) => ({ ...o, percent: 0 })));
+  const handleChange: UploadProps<RcFile>['onChange'] = ({ file }) => {
+    clearVideo();
+    setVideoFile(file.originFileObj);
   };
 
-  const transcode = async (entity: UploadFile<RcFile>, index: number) => {
-    let name: string | string[] = entity.name.split('.');
-    const inType = name.pop();
-    name = name.join();
-    const buffer = await entity?.originFileObj?.arrayBuffer();
-    const outType = entity.linkProps.ext;
-    if (buffer) {
-      worker.postMessage({ name, inType, outType, buffer }, [buffer]);
-      worker.onmessage = (ev) => {
-        const { data, type } = ev.data;
-        if (type === 'error') {
-          messageApi.error('转换失败');
-        } else {
-          if (type === 'progress') {
-            entity.percent = parseInt(String(Number(data) * 100));
+  const transcode = async () => {
+    if (videoFile) {
+      const { ext, name } = FileUtils.getFileName(videoFile.name);
+      const buffer = await videoFile.arrayBuffer();
+      if (buffer) {
+        worker.postMessage({ name, inType: ext, outType: outputFormat, buffer }, [buffer]);
+        worker.onmessage = (ev) => {
+          const { data, type } = ev.data;
+          if (type === 'logger') {
           }
-          if (type === 'result') {
-            entity.url = URL.createObjectURL(new Blob([data], { type: entity.linkProps.mime }));
+          if (type === 'error') {
+            messageApi.error(
+              <FormattedMessage id={'page.video.transcoding.transcode_failed'}></FormattedMessage>,
+            );
+          } else {
+            if (type === 'progress') {
+              setProgress(data);
+            }
+            if (type === 'result') {
+              const url = URL.createObjectURL(new Blob([data], { type: outputFormat }));
+              setOutputUrl(url);
+            }
           }
-          setFileList((o) => {
-            o[index] = entity;
-            return [...o];
-          });
-        }
-      };
+        };
+      }
     }
   };
-
-  const download = (entity: UploadFile<RcFile>) => {
-    downloadFile(entity.url);
-  };
-
-  const columns: ProColumns<UploadFile<RcFile>>[] = [
-    {
-      title: '视频',
-      dataIndex: 'file',
-      width: '50%',
-      renderText: (text, record) => record.name,
-    },
-    {
-      title: '转码格式',
-      dataIndex: 'ext',
-      valueType: 'select',
-      render: (dom, entity, index) => [
-        <Select
-          placeholder={'请选择转码格式'}
-          key={'ext'}
-          style={{ width: 200 }}
-          onChange={(value) => {
-            const valueArr = value.split('_');
-            entity.linkProps = {
-              ...entity.linkProps,
-              ext: valueArr[0],
-              mime: valueArr[1],
-            };
-            setFileList((o) => {
-              o[index] = entity;
-              return [...o];
-            });
-          }}
-          options={gVideoFormatList.map((item) => ({
-            label: `${item.ext}(${item.mime})`,
-            value: `${item.ext}_${item.mime}`,
-          }))}
-        ></Select>,
-      ],
-    },
-    {
-      title: '进度',
-      dataIndex: 'progress',
-      width: 200,
-      render: (dom, entity) => {
-        return <Progress percent={entity.percent}></Progress>;
-      },
-    },
-    {
-      title: '操作',
-      dataIndex: 'option',
-      align: 'center',
-      fixed: 'right',
-      width: 120,
-      render: (dom, entity, index) => {
-        return [
-          <Button
-            size={'small'}
-            key="transcode"
-            type={'link'}
-            onClick={() => transcode(entity, index)}
-          >
-            转码
-          </Button>,
-          <Button
-            size={'small'}
-            disabled={entity.percent !== 100}
-            key="download"
-            type={'link'}
-            onClick={() => download(entity)}
-          >
-            下载
-          </Button>,
-        ];
-      },
-    },
-  ];
 
   return (
     <PageContainer>
-      <>
+      <ProCard split={'horizontal'}>
         {contextHolder}
-        <ProCard style={{ minHeight: 420 }}>
-          <Space size={'middle'} direction={'vertical'} style={{ width: '100%' }}>
+        <ProCard>
+          <Space>
             <Upload
-              listType="picture"
-              fileList={fileList}
-              beforeUpload={beforeUpload}
               accept={'video/*'}
+              maxCount={1}
               showUploadList={false}
+              multiple={false}
               onChange={handleChange}
+              beforeUpload={beforeUpload}
             >
-              <Button icon={<UploadOutlined />}>
+              <Button
+                disabled={!_.isNil(progress) && progress !== 0 && progress !== 1}
+                icon={<UploadOutlined />}
+              >
                 {''}
-                上传视频
+                <FormattedMessage id={'page.video.transcoding.upload'}></FormattedMessage>
               </Button>
             </Upload>
-            <ProTable
-              bordered
-              rowKey={(record) => record.uid}
-              pagination={false}
-              search={false}
-              toolBarRender={false}
-              dataSource={fileList}
-              columns={columns}
-            ></ProTable>
+            <Button
+              disabled={!videoFile || (progress !== 0 && progress !== 1)}
+              icon={<ThunderboltOutlined />}
+              onClick={() => setShowSelectFormat(true)}
+            >
+              {''}
+              <FormattedMessage id={'page.video.transcoding.transcode'}></FormattedMessage>
+            </Button>
+            <Button disabled={progress !== 1} icon={<DownloadOutlined />}>
+              {''}
+              <FormattedMessage id={'page.video.transcoding.download'}></FormattedMessage>
+            </Button>
+            <Button disabled={progress !== 1} icon={<FileTextOutlined />}>
+              {''}
+              <FormattedMessage id={'page.video.transcoding.logger'}></FormattedMessage>
+            </Button>
           </Space>
+          <div id={'video_player'}></div>
         </ProCard>
-      </>
+        <ProCard split={'vertical'}>
+          <ProCard colSpan={12} title={<FormattedMessage id={'page.video.transcoding.original'} />}>
+            {videoFile ? <div id={'original_video'}></div> : <Empty></Empty>}
+          </ProCard>
+          <ProCard colSpan={12} title={<FormattedMessage id={'page.video.transcoding.result'} />}>
+            {!_.isNil(progress) && progress >= 0 && progress < 1 ? (
+              <Progress percent={Math.floor(progress * 100)} type={'circle'}></Progress>
+            ) : outputUrl ? (
+              <div id={'output_video'}></div>
+            ) : (
+              <Empty></Empty>
+            )}
+          </ProCard>
+        </ProCard>
+      </ProCard>
+      <Modal
+        onCancel={() => setShowSelectFormat(false)}
+        open={showSelectFormat}
+        title={<FormattedMessage id={'page.video.transcoding.placeholder'} />}
+        onOk={() => {
+          setShowSelectFormat(false);
+          transcode();
+        }}
+      >
+        <Select
+          value={outputFormat}
+          onChange={(value) => {
+            setOutputFormat(value);
+          }}
+          style={{ width: '100%' }}
+          options={gVideoFormatList.map((o) => ({ value: o.ext, label: o.ext }))}
+        ></Select>
+      </Modal>
     </PageContainer>
   );
 }

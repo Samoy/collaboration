@@ -33,6 +33,18 @@ export default {
   'page.video.transcoding': 'Video Transcoding',
   'page.video.transcoding.desc':
     'Transcode video format , for example, converting MP4 format to AVI.',
+  'page.video.transcoding.format_error': 'Invalid video format!',
+  'page.video.transcoding.upload': 'Upload',
+  'page.video.transcoding.download': 'Download',
+  'page.video.transcoding.preview': 'Preview',
+  'page.video.transcoding.progress': 'Progress',
+  'page.video.transcoding.transcode': 'Transcode',
+  'page.video.transcoding.placeholder': 'Please select output format.',
+  'page.video.transcoding.original': 'Original',
+  'page.video.transcoding.result': 'Output',
+  'page.video.transcoding.logger': 'Logs',
+  'page.video.transcoding.transcode_failed': 'Failed to transcode',
+  'page.video.transcoding.size_limit': 'The file size cannot exceed 2GB, please upload again.',
   'page.dev.color.conversion': 'Color Conversion',
   'page.dev.color.conversion.desc':
     'Convert color representation format, for example, converting hexadecimal to RGB',
