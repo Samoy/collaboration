@@ -14,6 +14,7 @@ import { gVideoFormatList } from '@/constant/video';
 import { FormattedMessage, getLocale } from '@umijs/max';
 import { ConvertUtils, FileUtils } from '@/utils';
 import _ from 'lodash';
+import download from 'downloadjs';
 
 const worker = new Worker(new URL('transcode.js', location.origin));
 
@@ -22,10 +23,11 @@ let originalPlayer: XgPlayer, outputPlayer: XgPlayer;
 function VideoTranscoding() {
   const [messageApi, contextHolder] = message.useMessage();
   const [videoFile, setVideoFile] = useState<RcFile>();
-  const [outputUrl, setOutputUrl] = useState<string>();
+  const [outputData, setOutputData] = useState<Blob>();
   const [showSelectFormat, setShowSelectFormat] = useState(false);
   const [outputFormat, setOutputFormat] = useState<string>(gVideoFormatList[0].ext);
   const [progress, setProgress] = useState<number>();
+  const [logText, setLogText] = useState('');
 
   const setPlayer = (id: string, url: string) => {
     return new XgPlayer({
@@ -50,13 +52,13 @@ function VideoTranscoding() {
     if (outputPlayer) {
       outputPlayer.destroy();
     }
-    if (outputUrl) {
-      outputPlayer = setPlayer('output_video', outputUrl);
+    if (outputData) {
+      outputPlayer = setPlayer('output_video', URL.createObjectURL(outputData));
     }
-  }, [outputUrl]);
+  }, [outputData]);
 
   const clearVideo = () => {
-    setOutputUrl('');
+    setOutputData(undefined);
     setProgress(0);
   };
 
@@ -86,6 +88,10 @@ function VideoTranscoding() {
         worker.onmessage = (ev) => {
           const { data, type } = ev.data;
           if (type === 'logger') {
+            if (data.type && data.message) {
+              const msg = `[${data.type}] ${data.message}\n`;
+              setLogText((s) => s + msg);
+            }
           }
           if (type === 'error') {
             messageApi.error(
@@ -96,13 +102,26 @@ function VideoTranscoding() {
               setProgress(data);
             }
             if (type === 'result') {
-              const url = URL.createObjectURL(new Blob([data], { type: outputFormat }));
-              setOutputUrl(url);
+              setOutputData(new Blob([data], { type: outputFormat }));
             }
           }
         };
       }
     }
+  };
+
+  /**
+   * 下载视频
+   */
+  const downLoadVideo = () => {
+    download(outputData!, `video.${outputFormat}`);
+  };
+
+  /**
+   * 查看日志
+   */
+  const downLog = () => {
+    download(logText, 'logger.txt', 'text/plain');
   };
 
   return (
@@ -135,11 +154,11 @@ function VideoTranscoding() {
               {''}
               <FormattedMessage id={'page.video.transcoding.transcode'}></FormattedMessage>
             </Button>
-            <Button disabled={progress !== 1} icon={<DownloadOutlined />}>
+            <Button disabled={progress !== 1} icon={<DownloadOutlined />} onClick={downLoadVideo}>
               {''}
               <FormattedMessage id={'page.video.transcoding.download'}></FormattedMessage>
             </Button>
-            <Button disabled={progress !== 1} icon={<FileTextOutlined />}>
+            <Button disabled={progress !== 1} icon={<FileTextOutlined />} onClick={downLog}>
               {''}
               <FormattedMessage id={'page.video.transcoding.logger'}></FormattedMessage>
             </Button>
@@ -150,10 +169,14 @@ function VideoTranscoding() {
           <ProCard colSpan={12} title={<FormattedMessage id={'page.video.transcoding.original'} />}>
             {videoFile ? <div id={'original_video'}></div> : <Empty></Empty>}
           </ProCard>
-          <ProCard colSpan={12} title={<FormattedMessage id={'page.video.transcoding.result'} />}>
+          <ProCard
+            layout={'center'}
+            colSpan={12}
+            title={<FormattedMessage id={'page.video.transcoding.result'} />}
+          >
             {!_.isNil(progress) && progress >= 0 && progress < 1 ? (
               <Progress percent={Math.floor(progress * 100)} type={'circle'}></Progress>
-            ) : outputUrl ? (
+            ) : outputData ? (
               <div id={'output_video'}></div>
             ) : (
               <Empty></Empty>

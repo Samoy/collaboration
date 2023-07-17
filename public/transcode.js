@@ -1,5 +1,5 @@
 importScripts('/scripts/ffmpeg.min.js');
-const ffmpeg = self.FFmpeg.createFFmpeg({log: true});
+const ffmpeg = self.FFmpeg.createFFmpeg({log: false});
 onmessage = async (event) => {
   try {
     const {buffer, name, inType, outType} = event.data;

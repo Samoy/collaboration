@@ -40,7 +40,7 @@ export default {
   'page.video.transcoding.placeholder': '请选择转码格式',
   'page.video.transcoding.transcode_failed': '转码失败',
   'page.video.transcoding.original': '源视频',
-  'page.video.transcoding.logger': '查看日志',
+  'page.video.transcoding.logger': '下载日志',
   'page.video.transcoding.result': '输出视频',
   'page.video.transcoding.size_limit': '文件大小不能超过2G，请重新上传',
   'page.dev.color.conversion': '颜色转换',
