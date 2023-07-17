@@ -8,5 +8,6 @@ export default {
   'menu.video': 'Video',
   'menu.video.transcoding': 'Video Transcoding',
   'menu.dev': 'Development',
+  'menu.dev.color': 'Color Conversion',
   'menu.others': 'Others',
 };

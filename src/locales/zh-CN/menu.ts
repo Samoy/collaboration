@@ -8,5 +8,6 @@ export default {
   'menu.video': '视频工具',
   'menu.video.transcoding': '视频转码',
   'menu.dev': '开发工具',
+  'menu.dev.color': '颜色转换',
   'menu.others': '其他工具',
 };

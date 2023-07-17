@@ -45,7 +45,7 @@ const tools: IToolModel[] = [
     category: ToolCategory.Development,
     icon: 'col-color-conversion',
     desc: 'page.dev.color.conversion.desc',
-    url: '/txt/count',
+    url: '/dev/color',
   },
   {
     title: 'page.other.date.calc',
