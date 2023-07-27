@@ -17,13 +17,13 @@ function ColorConversion() {
   const { token } = theme.useToken();
   const initialColor = new Color(token.colorPrimary);
   const [colorHex, setColorHex] = useState(initialColor.toHex8());
-  const [colorHsb, setColorHsb] = useState(initialColor.toHsb());
+  const [colorHsl, setColorHsl] = useState(initialColor.toHsl());
   const [colorRgb, setColorRgb] = useState(initialColor.toRgb());
 
   return (
     <PageContainer>
       <ProCard>
-        <ProDescriptions column={1} labelStyle={{ alignItems: 'center' }}>
+        <ProDescriptions column={1} labelStyle={{ alignItems: 'center', width: 50 }}>
           <ProDescriptions.Item label={<FormattedMessage id={'page.dev.color.color'} />}>
             <Popover
               placement={'bottomLeft'}
@@ -34,14 +34,14 @@ function ColorConversion() {
                   value={colorHex}
                   onChange={(color) => {
                     setColorHex(color.toHex8());
-                    setColorHsb(color.toHsb());
+                    setColorHsl(color.toHsl());
                     setColorRgb(color.toRgb());
                   }}
                 />
               }
             >
               <ColorBlock
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: 'pointer', marginLeft: 0 }}
                 color={new Color(colorHex).toHex8String()}
                 prefixCls={'rc-color-picker'}
               ></ColorBlock>
@@ -57,16 +57,16 @@ function ColorConversion() {
                   setColorHex(colorHex);
                   if (colorHex.length === 3 || colorHex.length === 6 || colorHex.length === 8) {
                     const color = new Color(colorHex);
-                    setColorHsb(color.toHsb());
+                    setColorHsl(color.toHsl());
                     setColorRgb(color.toRgb());
                   }
                 }}
               ></FixedWidthInput>
             </Space>
           </ProDescriptions.Item>
-          <ProDescriptions.Item label={'HSB'}>
+          <ProDescriptions.Item label={'HSL'}>
             <Space>
-              {['h', 's', 'b', 'a'].map((item) => {
+              {['h', 's', 'l', 'a'].map((item) => {
                 const max = item === 'h' ? 255 : 1;
                 const step = item === 'h' ? 1 : 0.01;
                 const precision = item === 'h' ? 0 : 2;
@@ -78,25 +78,25 @@ function ColorConversion() {
                     key={item}
                     precision={precision}
                     onChange={(val) => {
-                      const hsba = {
-                        ...colorHsb,
+                      const hsla = {
+                        ...colorHsl,
                         [item]: val,
                       };
-                      setColorHsb(hsba);
+                      setColorHsl(hsla);
                       if (
-                        hsba.h !== null &&
-                        hsba.s !== null &&
-                        hsba.b !== null &&
-                        hsba.a !== null
+                        hsla.h !== null &&
+                        hsla.s !== null &&
+                        hsla.l !== null &&
+                        hsla.a !== null
                       ) {
-                        const color = new Color(hsba);
+                        const color = new Color(`hsla(${hsla.h}, ${hsla.s}, ${hsla.l}, ${hsla.a})`);
                         setColorHex(color.toHex8());
                         setColorRgb(color.toRgb());
                       }
                     }}
                     addonBefore={item.toUpperCase()}
                     // @ts-ignore
-                    value={colorHsb[item]}
+                    value={colorHsl[item]}
                   />
                 );
               })}
@@ -129,7 +129,7 @@ function ColorConversion() {
                       ) {
                         const color = new Color(rgba);
                         setColorHex(color.toHex8());
-                        setColorHsb(color.toHsb());
+                        setColorHsl(color.toHsl());
                       }
                     }}
                     addonBefore={item.toUpperCase()}
