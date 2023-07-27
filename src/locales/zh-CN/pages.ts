@@ -45,6 +45,7 @@ export default {
   'page.video.transcoding.size_limit': '文件大小不能超过2G，请重新上传',
   'page.dev.color.conversion': '颜色转换',
   'page.dev.color.conversion.desc': '转换颜色表示形式，例如将十六进制转换为RGB',
+  'page.dev.color.color': '颜色',
   'page.other.date.calc': '日期计算',
   'page.other.date.calc.desc': '计算两个日期之间的间隔，或者多少天后的日期',
 };

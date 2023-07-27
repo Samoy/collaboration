@@ -48,6 +48,7 @@ export default {
   'page.dev.color.conversion': 'Color Conversion',
   'page.dev.color.conversion.desc':
     'Convert color representation format, for example, converting hexadecimal to RGB',
+  'page.dev.color.color': 'Color',
   'page.other.date.calc': 'Date Calculation',
   'page.other.date.calc.desc':
     'Calculate the interval between two dates or the date before/after a certain number of days',

@@ -1,7 +1,7 @@
 import React, { useMemo, useState } from 'react';
 import { styled } from '@@/plugin-styledComponents';
 import { SearchOutlined } from '@ant-design/icons';
-import { useIntl, useModel } from '@umijs/max';
+import { Link, useIntl, useModel } from '@umijs/max';
 import _ from 'lodash';
 import { Bool } from '@/constant/enum';
 import { Dropdown, theme } from 'antd';
@@ -55,8 +55,8 @@ const StyledDiv = styled.div<IStyledDivProps>`
     vertical-align: 8px;
     font-size: 14px;
     width: 0;
-    transition: all 0.3s ease-in-out;
     &:focus {
+      transition: all 0.3s ease-in-out;
       outline: none;
     }
 
@@ -100,7 +100,16 @@ export const SearchInput: React.FC = () => {
               `<strong style="color: ${token?.colorPrimaryTextActive}">$&</strong>`,
             );
             return {
-              label: <span dangerouslySetInnerHTML={{ __html: highlightLabel }} />,
+              label: (
+                <Link
+                  to={tool.url}
+                  onClick={() => {
+                    setInputValue('');
+                  }}
+                >
+                  <span dangerouslySetInnerHTML={{ __html: highlightLabel }} />
+                </Link>
+              ),
               key: tool.title,
             };
           }),

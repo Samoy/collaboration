@@ -20,3 +20,5 @@ yarn-error.log
 CNAME
 /build
 /public
+/src/assets
+/src/styles
