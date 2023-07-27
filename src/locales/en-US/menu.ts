@@ -10,4 +10,5 @@ export default {
   'menu.dev': 'Development',
   'menu.dev.color': 'Color Conversion',
   'menu.others': 'Others',
+  'menu.others.date': 'Date Calculation',
 };

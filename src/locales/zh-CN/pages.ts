@@ -48,4 +48,8 @@ export default {
   'page.dev.color.color': '颜色',
   'page.other.date.calc': '日期计算',
   'page.other.date.calc.desc': '计算两个日期之间的间隔，或者多少天后的日期',
+  'page.other.date.start_date': '开始日期',
+  'page.other.date.end_date': '结束日期',
+  'page.other.date.duration': '间隔',
+  'page.other.date.days': '天',
 };

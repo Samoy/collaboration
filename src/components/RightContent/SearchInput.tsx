@@ -55,8 +55,8 @@ const StyledDiv = styled.div<IStyledDivProps>`
     vertical-align: 8px;
     font-size: 14px;
     width: 0;
+    transition: all 0.3s ease-in-out;
     &:focus {
-      transition: all 0.3s ease-in-out;
       outline: none;
     }
 
@@ -90,6 +90,7 @@ export const SearchInput: React.FC = () => {
     <StyledDiv show={_.isEmpty(inputValue) ? Bool.False : Bool.True}>
       <SearchOutlined></SearchOutlined>
       <Dropdown
+        transitionName={''}
         open={!_.isEmpty(filterList)}
         menu={{
           items: filterList.map((tool) => {

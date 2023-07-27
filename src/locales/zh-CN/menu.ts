@@ -10,4 +10,5 @@ export default {
   'menu.dev': '开发工具',
   'menu.dev.color': '颜色转换',
   'menu.others': '其他工具',
+  'menu.others.date': '日期计算',
 };

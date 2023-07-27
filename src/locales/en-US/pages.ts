@@ -52,4 +52,8 @@ export default {
   'page.other.date.calc': 'Date Calculation',
   'page.other.date.calc.desc':
     'Calculate the interval between two dates or the date before/after a certain number of days',
+  'page.other.date.start_date': 'Start Date',
+  'page.other.date.end_date': 'End Date',
+  'page.other.date.duration': 'Duration',
+  'page.other.date.days': 'day(s)',
 };

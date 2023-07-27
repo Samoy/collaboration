@@ -84,6 +84,12 @@ export default [
     component: 'Others',
   },
   {
+    path: '/others/date',
+    name: 'others.date',
+    component: './Others/DateCalc',
+    hideInMenu: true,
+  },
+  {
     path: '*',
     layout: false,
     component: './404',

@@ -52,7 +52,7 @@ const tools: IToolModel[] = [
     category: ToolCategory.Others,
     icon: 'col-date-calc',
     desc: 'page.other.date.calc.desc',
-    url: '/txt/count',
+    url: '/others/date',
   },
 ];
 
