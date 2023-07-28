@@ -1,20 +1,20 @@
-import { PageContainer, ProCard } from '@ant-design/pro-components';
-import React, { useEffect, useState } from 'react';
-import { Button, Empty, message, Modal, Progress, Select, Space, Upload, UploadProps } from 'antd';
+import { gVideoFormatList } from '@/constant/video';
+import { ConvertUtils, FileUtils } from '@/utils';
 import {
   DownloadOutlined,
   FileTextOutlined,
   ThunderboltOutlined,
   UploadOutlined,
 } from '@ant-design/icons';
+import { PageContainer, ProCard } from '@ant-design/pro-components';
+import { FormattedMessage, getLocale } from '@umijs/max';
+import { Button, Empty, message, Modal, Progress, Select, Space, Upload, UploadProps } from 'antd';
 import { RcFile } from 'antd/lib/upload';
+import download from 'downloadjs';
+import _ from 'lodash';
+import { useEffect, useState } from 'react';
 import XgPlayer from 'xgplayer';
 import 'xgplayer/dist/index.min.css';
-import { gVideoFormatList } from '@/constant/video';
-import { FormattedMessage, getLocale } from '@umijs/max';
-import { ConvertUtils, FileUtils } from '@/utils';
-import _ from 'lodash';
-import download from 'downloadjs';
 
 const worker = new Worker(new URL('transcode.js', location.origin));
 
@@ -121,7 +121,7 @@ function VideoTranscoding() {
    * 查看日志
    */
   const downLog = () => {
-    download(logText, 'logger.txt', 'text/plain');
+    download(logText, 'log.txt', 'text/plain');
   };
 
   return (

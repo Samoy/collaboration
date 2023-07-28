@@ -30,6 +30,8 @@ export default {
   'page.image.exif.tooltip':
     'Please understand the meanings of each parameter fully and accord to the format strictly before editing.',
   'page.image.exif.format-error': 'Please upload image in JPEG format',
+  'page.image.edit': 'Image Edit',
+  'page.image.edit.desc': 'Rotate, scale, crop, text, mask, filters, etc.',
   'page.video.transcoding': 'Video Transcoding',
   'page.video.transcoding.desc':
     'Transcode video format , for example, converting MP4 format to AVI.',

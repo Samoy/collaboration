@@ -29,6 +29,8 @@ export default {
   'page.image.exif.title': '元信息',
   'page.image.exif.tooltip': '编辑前请充分了解各个参数的含义，并严格按照格式编辑',
   'page.image.exif.format-error': '请上传有效的JPEG图片',
+  'page.image.edit': '图片编辑',
+  'page.image.edit.desc': '旋转、缩放、裁剪、添加文本、蒙版、滤镜等',
   'page.video.transcoding': '视频转码',
   'page.video.transcoding.desc': '视频格式转码，例如将MP4格式转换为AVI',
   'page.video.transcoding.format_error': '不是有效的视频格式',

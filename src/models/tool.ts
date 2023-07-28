@@ -34,6 +34,13 @@ const tools: IToolModel[] = [
     url: '/img/exif',
   },
   {
+    title: 'page.image.edit',
+    category: ToolCategory.Image,
+    icon: 'col-image-edit',
+    desc: 'page.image.edit.desc',
+    url: '/img/edit',
+  },
+  {
     title: 'page.video.transcoding',
     category: ToolCategory.Video,
     icon: 'col-video-transcoding',

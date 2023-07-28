@@ -15,7 +15,7 @@ const Settings: ProLayoutProps & {
   colorWeak: false,
   pwa: true,
   logo: '/logo.svg',
-  iconfontUrl: '/scripts/iconfont.js',
+  iconfontUrl: '/scripts/iconfont.min.js',
 };
 
 export default Settings;

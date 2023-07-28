@@ -5,6 +5,7 @@ export default {
   'menu.txt.reverse': 'Text Reverse',
   'menu.img': 'Picture',
   'menu.img.exif': 'Image Exif',
+  'menu.img.edit': 'Image Edit',
   'menu.video': 'Video',
   'menu.video.transcoding': 'Video Transcoding',
   'menu.dev': 'Development',

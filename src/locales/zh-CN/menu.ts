@@ -5,6 +5,7 @@ export default {
   'menu.txt.reverse': '文本翻转',
   'menu.img': '图片工具',
   'menu.img.exif': '图片元信息',
+  'menu.img.edit': '图片编辑',
   'menu.video': '视频工具',
   'menu.video.transcoding': '视频转码',
   'menu.dev': '开发工具',

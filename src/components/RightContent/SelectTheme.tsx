@@ -6,6 +6,7 @@ export const SelectTheme: React.FC = () => {
   const { initialState, setInitialState } = useModel('@@initialState');
   return (
     <Switch
+      style={{ padding: 0, borderRadius: 100 }}
       key={'theme'}
       checked={initialState?.settings?.navTheme === 'realDark'}
       onChange={(value) => {

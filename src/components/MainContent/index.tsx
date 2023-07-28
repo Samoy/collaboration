@@ -1,17 +1,15 @@
-import React from 'react';
-import { PageContainer } from '@ant-design/pro-components';
-import { useModel, FormattedMessage, Link } from '@umijs/max';
 import { ToolCategory } from '@/constant/enum';
-import { Row, Col, Card } from 'antd';
 import { styled } from '@@/plugin-styledComponents';
+import { PageContainer } from '@ant-design/pro-components';
+import { FormattedMessage, Link, useModel } from '@umijs/max';
+import { Card, Col, Row, Tooltip } from 'antd';
+import React from 'react';
 
-const { Meta } = Card;
-
-const StyledMeta = styled(Meta)`
+const StyledMeta = styled(Card.Meta)`
   .ant-card-meta-description {
     overflow: hidden;
-    text-overflow: ellipsis;
     white-space: nowrap;
+    text-overflow: ellipsis;
   }
 `;
 
@@ -35,7 +33,13 @@ export const MainContent: React.FC<IMainContentProps> = ({ category }) => {
                       <use xlinkHref={`#${tool.icon}`}></use>
                     </svg>
                   }
-                  description={<FormattedMessage id={tool.desc} />}
+                  description={
+                    <Tooltip title={<FormattedMessage id={tool.desc} />}>
+                      <span>
+                        <FormattedMessage tagName={'span'} id={tool.desc} />
+                      </span>
+                    </Tooltip>
+                  }
                   title={<FormattedMessage id={tool.title} />}
                 />
               </Card>

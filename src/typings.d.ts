@@ -18,5 +18,6 @@ declare module 'react-fittext';
 declare module 'bizcharts-plugin-slider';
 declare module 'piexifjs';
 declare module 'downloadjs';
+declare module '@toast-ui/react-image-editor';
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
