@@ -3,16 +3,12 @@ import localeCN from '@/locales/zh-CN/image-editor';
 import ReactImageEditor from '@toast-ui/react-image-editor';
 import { getLocale, useModel } from '@umijs/max';
 import { theme as antdTheme } from 'antd';
-import { useEffect } from 'react';
 import 'tui-color-picker/dist/tui-color-picker.min.css';
 import 'tui-image-editor/dist/tui-image-editor.css';
 
 function ImageEdit() {
   const { initialState } = useModel('@@initialState');
   const { token } = antdTheme.useToken();
-  useEffect(() => {
-    console.log('国际化', getLocale() === 'zh-CN');
-  }, []);
 
   return (
     <StyledImageEditorWrap theme={initialState?.settings?.navTheme} primary={token.colorPrimary}>
