@@ -1,15 +1,24 @@
-import theme from '@/themes/image_editor_theme';
-import { PageContainer } from '@ant-design/pro-components';
-import ImageEditor from '@toast-ui/react-image-editor';
+import StyledImageEditorWrap from '@/components/StyledImageEditorWrap';
+import localeCN from '@/locales/zh-CN/image-editor';
+import ReactImageEditor from '@toast-ui/react-image-editor';
+import { getLocale, useModel } from '@umijs/max';
+import { theme as antdTheme } from 'antd';
+import { useEffect } from 'react';
+import 'tui-color-picker/dist/tui-color-picker.min.css';
 import 'tui-image-editor/dist/tui-image-editor.css';
 
 function ImageEdit() {
+  const { initialState } = useModel('@@initialState');
+  const { token } = antdTheme.useToken();
+  useEffect(() => {
+    console.log('国际化', getLocale() === 'zh-CN');
+  }, []);
+
   return (
-    <PageContainer>
-      <ImageEditor
-        icon={''}
+    <StyledImageEditorWrap theme={initialState?.settings?.navTheme} primary={token.colorPrimary}>
+      <ReactImageEditor
         includeUI={{
-          theme: theme.whiteTheme,
+          locale: getLocale() === 'zh-CN' ? localeCN : {},
           menuBarPosition: 'bottom',
           uiSize: {
             width: '100%',
@@ -18,7 +27,7 @@ function ImageEdit() {
         }}
         usageStatistics={false}
       />
-    </PageContainer>
+    </StyledImageEditorWrap>
   );
 }
 export default ImageEdit;
