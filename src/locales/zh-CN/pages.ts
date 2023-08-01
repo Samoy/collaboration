@@ -48,6 +48,7 @@ export default {
   'page.video.transcoding.logger': '下载日志',
   'page.video.transcoding.result': '输出视频',
   'page.video.transcoding.size_limit': '文件大小不能超过2G，请重新上传',
+  'page.video.transcoding.long_time': '转码需要较长时间，请勿刷新页面',
   'page.dev.color.conversion': '颜色转换',
   'page.dev.color.conversion.desc': '转换颜色表示形式，例如将十六进制转换为RGB',
   'page.dev.color.color': '颜色',

@@ -8,7 +8,7 @@ import {
 } from '@ant-design/icons';
 import { PageContainer, ProCard } from '@ant-design/pro-components';
 import { FormattedMessage, getLocale } from '@umijs/max';
-import { Button, Empty, message, Modal, Progress, Select, Space, Upload, UploadProps } from 'antd';
+import { Button, Empty, message, Modal, Progress, Select, Space, Typography, Upload } from 'antd';
 import { RcFile } from 'antd/lib/upload';
 import download from 'downloadjs';
 import _ from 'lodash';
@@ -16,7 +16,8 @@ import { useEffect, useState } from 'react';
 import XgPlayer from 'xgplayer';
 import 'xgplayer/dist/index.min.css';
 
-const worker = new Worker(new URL('transcode.js', location.origin));
+const baseUrl = location.href.split('#')[0];
+const worker = new Worker(new URL('transcode.worker.js', baseUrl));
 
 let originalPlayer: XgPlayer, outputPlayer: XgPlayer;
 
@@ -62,21 +63,18 @@ function VideoTranscoding() {
     setProgress(0);
   };
 
-  const beforeUpload = (file: File) => {
+  const beforeUpload = (file: RcFile) => {
+    clearVideo();
     const isVideo = file.type.startsWith('video/');
     const under2GB = file.size <= ConvertUtils.convertToBytes(2, 'GB');
     if (!isVideo) {
       messageApi.error(<FormattedMessage id={'page.video.transcoding.format_error'} />);
-    }
-    if (!under2GB) {
+    } else if (!under2GB) {
       messageApi.error(<FormattedMessage id={'page.video.transcoding.size_limit'} />);
+    } else {
+      setVideoFile(file);
     }
-    return (isVideo && under2GB) || Upload.LIST_IGNORE;
-  };
-
-  const handleChange: UploadProps<RcFile>['onChange'] = ({ file }) => {
-    clearVideo();
-    setVideoFile(file.originFileObj);
+    return false;
   };
 
   const transcode = async () => {
@@ -135,7 +133,6 @@ function VideoTranscoding() {
               maxCount={1}
               showUploadList={false}
               multiple={false}
-              onChange={handleChange}
               beforeUpload={beforeUpload}
             >
               <Button
@@ -165,17 +162,23 @@ function VideoTranscoding() {
           </Space>
           <div id={'video_player'}></div>
         </ProCard>
-        <ProCard split={'vertical'}>
+        <ProCard split={'vertical'} style={{ height: '100%' }}>
           <ProCard colSpan={12} title={<FormattedMessage id={'page.video.transcoding.original'} />}>
             {videoFile ? <div id={'original_video'}></div> : <Empty></Empty>}
           </ProCard>
           <ProCard
             layout={'center'}
+            style={{ height: '100%' }}
             colSpan={12}
             title={<FormattedMessage id={'page.video.transcoding.result'} />}
           >
-            {!_.isNil(progress) && progress >= 0 && progress < 1 ? (
-              <Progress percent={Math.floor(progress * 100)} type={'circle'}></Progress>
+            {!_.isNil(progress) && progress > 0 && progress < 1 ? (
+              <Space direction={'vertical'} align={'center'}>
+                <Progress percent={Math.floor(progress * 100)} type={'circle'}></Progress>
+                <Typography.Text type={'secondary'}>
+                  <FormattedMessage id={'page.video.transcoding.long_time'}></FormattedMessage>
+                </Typography.Text>
+              </Space>
             ) : outputData ? (
               <div id={'output_video'}></div>
             ) : (

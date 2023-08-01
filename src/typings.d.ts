@@ -19,5 +19,6 @@ declare module 'bizcharts-plugin-slider';
 declare module 'piexifjs';
 declare module 'downloadjs';
 declare module '@toast-ui/react-image-editor';
+declare module 'tui-image-editor/src/js/ui/theme/standard';
 
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;

@@ -14,8 +14,8 @@ const Settings: ProLayoutProps & {
   fixSiderbar: true,
   colorWeak: false,
   pwa: true,
-  logo: '/logo.svg',
-  iconfontUrl: '/scripts/iconfont.min.js',
+  logo: './logo.svg',
+  iconfontUrl: './scripts/iconfont.min.js',
 };
 
 export default Settings;

@@ -50,6 +50,8 @@ export default {
   'page.video.transcoding.logger': 'Logs',
   'page.video.transcoding.transcode_failed': 'Failed to transcode',
   'page.video.transcoding.size_limit': 'The file size cannot exceed 2GB, please upload again.',
+  'page.video.transcoding.long_time':
+    'Transcoding might take a while, please do not leave the page.',
   'page.dev.color.conversion': 'Color Conversion',
   'page.dev.color.conversion.desc':
     'Convert color representation format, for example, converting hexadecimal to RGB',

@@ -1,13 +1,13 @@
+import { FileUtils } from '@/utils';
+import { ClearOutlined, DownloadOutlined, SaveOutlined, UploadOutlined } from '@ant-design/icons';
 import { PageContainer, ProCard, ProDescriptions } from '@ant-design/pro-components';
-import piexifjs, { piexif } from 'piexifjs';
-import { Button, Empty, Image, message, Space, theme, Typography, Upload, UploadProps } from 'antd';
-import React, { useEffect, useState } from 'react';
-import _ from 'lodash';
+import { FormattedMessage } from '@umijs/max';
+import { Button, Empty, Image, message, Space, theme, Typography, Upload } from 'antd';
 import { RcFile } from 'antd/lib/upload';
 import download from 'downloadjs';
-import { FormattedMessage } from '@umijs/max';
-import { ClearOutlined, DownloadOutlined, SaveOutlined, UploadOutlined } from '@ant-design/icons';
-import { FileUtils } from '@/utils';
+import _ from 'lodash';
+import piexifjs, { piexif } from 'piexifjs';
+import { useEffect, useState } from 'react';
 
 type ExifObj = {
   '0th': Record<number, any>;
@@ -69,7 +69,8 @@ function ImageExif() {
     setFile(undefined);
   };
 
-  const beforeUpload = (file: File) => {
+  const beforeUpload = (file: RcFile) => {
+    clearInfo();
     const isJPG = file.type === 'image/jpeg';
     if (!isJPG) {
       messageApi.error(
@@ -78,16 +79,13 @@ function ImageExif() {
           values={{ name: file.name }}
         ></FormattedMessage>,
       );
+    } else {
+      setFile(file);
+      FileUtils.getBase64(file).then((data) => {
+        setImageData(data);
+      });
     }
-    clearInfo();
-    return isJPG || Upload.LIST_IGNORE;
-  };
-
-  const handleChange: UploadProps['onChange'] = ({ file }) => {
-    setFile(file.originFileObj);
-    FileUtils.getBase64(file.originFileObj as RcFile).then((data) => {
-      setImageData(data);
-    });
+    return false;
   };
 
   const saveExif = () => {
@@ -143,7 +141,6 @@ function ImageExif() {
                   multiple={false}
                   showUploadList={false}
                   maxCount={1}
-                  onChange={handleChange}
                 >
                   <Button icon={<UploadOutlined></UploadOutlined>}>
                     {''}

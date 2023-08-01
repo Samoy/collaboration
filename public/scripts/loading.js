@@ -47,7 +47,7 @@
         min-height: 362px;
       ">
         <div class="page-loading-warp">
-          <img alt='loading' src='/loading.svg' width='80px' height='80px'/>
+          <img alt='loading' src='./loading.svg' width='80px' height='80px'/>
         </div>
         <div class="loading-title">
          ${_locale === 'zh-CN' ? '加载中...' : 'Loading...'}
