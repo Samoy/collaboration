@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkcollaboration=self.webpackChunkcollaboration||[]).push([[963],{72537:function(u,o,n){n.r(o),n.d(o,{VideoPage:function(){return t}});var M=n(67294),a=n(2e4),E=n(46502),P=n(85893),t=function(){return(0,P.jsx)(E.M,{category:a.o.Video})};o.default=t}}]);
