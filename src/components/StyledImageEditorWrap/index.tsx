@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { styled } from '@@/exports';
-import { PageContainer, PageContainerProps } from '@ant-design/pro-components';
+import { PageContainer, PageContainerProps, ProCard } from '@ant-design/pro-components';
 import { PureSettings } from '@ant-design/pro-layout/lib/defaultSettings';
 import React from 'react';
 
@@ -10,7 +10,11 @@ type StyledImageEditorWrapProps = PageContainerProps & {
 };
 
 const ImageEditorWrap: React.FC<StyledImageEditorWrapProps> = (props) => {
-  return <PageContainer {...props}>{props.children}</PageContainer>;
+  return (
+    <PageContainer {...props}>
+      <ProCard>{props.children}</ProCard>
+    </PageContainer>
+  );
 };
 
 const StyledImageEditorWrap = styled(ImageEditorWrap)`
@@ -22,7 +26,8 @@ const StyledImageEditorWrap = styled(ImageEditorWrap)`
       .tui-image-editor-submenu-style {
         background-color: ${(props) => (props.theme === 'light' ? '#ccc' : '#1e1e1e')} !important;
       }
-      .tui-image-editor-header-logo {
+      .tui-image-editor-header-logo,
+      .tui-image-editor-header-buttons {
         display: none;
       }
       background-image: ${(props) =>

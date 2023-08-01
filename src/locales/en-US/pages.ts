@@ -32,6 +32,9 @@ export default {
   'page.image.exif.format-error': 'Please upload image in JPEG format',
   'page.image.edit': 'Image Edit',
   'page.image.edit.desc': 'Rotate, scale, crop, text, mask, filters, etc.',
+  'page.image.edit.upload': 'Load Image',
+  'page.image.edit.download': 'Download Image',
+  'page.image.edit.format.error': 'Please upload a valid image',
   'page.video.transcoding': 'Video Transcoding',
   'page.video.transcoding.desc':
     'Transcode video format , for example, converting MP4 format to AVI.',

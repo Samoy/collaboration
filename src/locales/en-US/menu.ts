@@ -3,7 +3,7 @@ export default {
   'menu.txt': 'Text',
   'menu.txt.count': 'Word Count',
   'menu.txt.reverse': 'Text Reverse',
-  'menu.img': 'Picture',
+  'menu.img': 'Image',
   'menu.img.exif': 'Image Exif',
   'menu.img.edit': 'Image Edit',
   'menu.video': 'Video',
